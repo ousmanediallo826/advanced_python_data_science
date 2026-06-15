@@ -53,3 +53,30 @@ if __name__ == "__main__":
     f = Robot()
     print(z.RoneInstances())
     print(Robot.RoneInstances())
+
+
+
+
+#===================3. Properties vs. Getters and Setters=========================
+class Employee:
+    def __init__(self, name, salary):
+        self.name = name
+        self._salary = salary
+
+    @property
+    def salary(self):
+        print("Fetching salary....")
+        return self._salary
+    @salary.setter
+    def salary(self, value):
+        print(f"Attempting to set salary to {value}...")
+        if value < 0:
+            raise ValueError("Salary cannot be negative")
+        self._salary = value
+
+
+
+emp = Employee("Henry", 100)
+print(emp.salary, emp.name)
+emp2 = Employee("Henry", -100)
+print(emp2.salary, emp2.name)
