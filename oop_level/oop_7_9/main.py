@@ -77,3 +77,7 @@ class Product:
     def show_saved_data(self):
         outstr = f"Saved Data: {self.name=}, {self.currency=}, {self._used_currency=} {self.price=}, {self.shipping_cost=}"
         print(outstr)
+
+
+
+
