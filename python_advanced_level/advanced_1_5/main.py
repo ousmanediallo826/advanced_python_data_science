@@ -183,3 +183,58 @@ dataset = [12, 45, 2, 67, 34, 9]
 
 max_value = reduce(lambda x,y: x if x > y else y, dataset)
 print(max_value)
+
+
+#===========5. zip introduction and examples==================
+names = ["Alice", "Bob", "Charlie"]
+scores = [85, 92, 78]
+
+zipped_stream = zip(names, scores)
+print(list(zipped_stream))
+
+for name, score in zip(names, scores):
+    print(f"{name} scored {score} points!")
+
+
+players = ["Federer", "Nadal", "Djokovic", "Murray"]
+trophies = [20, 22, 24]
+
+result = zip(players, trophies)
+print(list(result))
+
+
+from itertools import zip_longest
+results = zip_longest(players, trophies, fillvalue="UNKNOWN")
+print(list(results))
+
+
+keys = ["id", "role", "active"]
+values = [101, "Admin", True]
+
+user_dict = dict(zip(keys, values))
+print(user_dict)
+
+
+paired_data = [('A', 1), ('B', 2), ('C', 3)]
+letters, numbers = zip(*paired_data)
+
+print(letters)
+print(numbers)
+
+
+#======Problem 1: Grid Coordinates Matrix============
+x_coords = [1, 2, 3]
+y_coords = [10, 20, 30]
+
+coordinates = zip(x_coords, y_coords)
+print(list(coordinates))
+
+
+#====Problem 2: Inventory Valuation===
+items = ["Laptop", "Mouse", "Monitor"]
+quantities = [10, 50, 15]
+prices = [999.00, 25.00, 200.00]
+
+for items, quantities, price in zip(items, quantities, prices):
+    value = quantities * price
+    print(f"{items} - {quantities} - {price}: {value}")
