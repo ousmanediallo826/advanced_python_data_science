@@ -111,3 +111,75 @@ class PowerOfTwo:
 
 for val in PowerOfTwo(5):
     print(val)
+
+
+
+#==========3. Generators and Iterators====================
+def process_steps():
+    print("-> Waking up for Step 1")
+    yield "Data Pack A"
+
+    print("-> Waking up for Step 2")
+    yield "Data Pack B"
+
+
+stream = process_steps()
+
+print("Firing first next():")
+print(f"Received: {next(stream)}")
+
+print("\nFiring second next():")
+print(f"Received: {next(stream)}")
+
+
+#==Problem 1: The Infinite Multiples Stream====
+def infinite_multiples(n):
+    multiplier = 1
+    while True:
+        yield n * multiplier
+        multiplier += 1
+
+
+
+gen = infinite_multiples(5)
+print(next(gen))
+print(next(gen))
+print(next(gen))
+
+
+#=====================4. Lambda Operator, filter, reduce and map==================
+def square(x):
+    return x * x
+
+square_lambda = lambda x: x * x
+print(square_lambda(5))
+print(square(5))
+
+numbers = [1, 2, 3, 4, 5]
+doubled_stream = map(lambda x: x * 2, numbers)
+print(list(doubled_stream))
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+even_stream = filter(lambda x: x % 2 == 0, numbers)
+print(list(even_stream))
+
+
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+product = reduce(lambda x, y: x * y, numbers)
+print(product)
+
+#==Problem 1: The String Cleansing Pipeline (map + filter)==
+raw_inputs = ["hi", "alex", "am", "python", "ok"]
+
+clean_stream = map(lambda s: s.upper(), raw_inputs)
+filtered_stream = filter(lambda s: len(s) > 3, clean_stream)
+print(list(filtered_stream))
+
+
+#==Problem 2: Finding the Maximum Value (reduce)==
+dataset = [12, 45, 2, 67, 34, 9]
+
+max_value = reduce(lambda x,y: x if x > y else y, dataset)
+print(max_value)
