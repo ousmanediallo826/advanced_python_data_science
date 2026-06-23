@@ -166,3 +166,74 @@ def factorial(n):
     return n * factorial(n - 1)
 print(factorial(5))
 print(factorial(6))
+
+
+#================8. Functional Programming OOP=======================
+
+class User:
+    def __init__(self, username, role):
+        self.username = username
+        self.role = role
+
+
+user1 = User("Ousmane", "User")
+user1.role = "Admin"
+print(user1.username)
+print(user1.role)
+
+from dataclasses import dataclass, replace
+
+@dataclass(frozen=True)
+class ImmutableUser:
+    username: str
+    role: str
+
+
+user1 = ImmutableUser("Ousmane", "User")
+user2 = replace(user1, role="Admin")
+print(user2.username)
+print(user2.role)
+
+
+
+
+#===================9. List Comprehension=========================
+squares = []
+for x in range(1,10):
+    squares.append(x**2)
+print(squares)
+
+squares = [x**2 for x in range(1,10)]
+print("squares:", squares)
+
+
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+
+evens = [x for x in numbers if x % 2 ==0]
+print("evens",evens)
+
+
+labels = ["Even" if x % 2 == 0 else "Odd" for x in range(1,10)]
+print("labels", labels)
+
+matrix = [
+    [1, 2],
+    [3, 4],
+    [5, 6]
+]
+
+flat_list = [element for row in matrix for element in row]
+print("flat_list", flat_list)
+
+
+#===Problem 1: The Domain Email Extractor===
+emails = ["user1@gmail.com", "admin@company.org", "dev@yahoo.com", "info@school.edu"]
+domains = [domain.split("@")[1] for domain in emails  if domain.endswith("com")]
+print("domains", domains)
+
+#===Problem 2: Transposing Coordinates====
+coords = [[-1, 10], [2, 20], [0, 30], [4, 40]]
+
+flipped_cords = [(x,y) for x, y in coords if x > 0]
+print("flipped_cords", flipped_cords)
