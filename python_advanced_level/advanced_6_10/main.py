@@ -115,3 +115,54 @@ def add(a, b):
 print(f"Result: {add(10, 20)}")
 
 print(add(10, 20))
+
+
+
+#=======7. Memoization and Decorators=======
+from functools import wraps, lru_cache
+def memoize(func):
+    cache = {}
+    @wraps(func)
+    def wrapper(*args):
+        if args in cache:
+            print(f"[Cache HIT] Returning cached result for inputs {args}")
+            return cache[args]
+        print(f"[Cache MISS] Calculating result for inputs {args}")
+        result = func(*args)
+        cache[args] = result
+    return wrapper
+
+@memoize
+def expensive_calculation(n):
+    return n * 2
+
+print(expensive_calculation(10))
+print(expensive_calculation(10))
+print(expensive_calculation(20))
+
+@lru_cache(maxsize=128)
+def fetch_user_profile(user_id):
+    return f"User Profile Data for {user_id}"
+
+
+#===Practice Problem: The Factorial Speed Test===
+def memoize(func):
+    cache = {}
+    @wraps(func)
+    def wrapper(*args):
+        if args in cache:
+            print(f"[Cache HIT] Returning cached result for inputs {args}")
+            return cache[args]
+        print(f"[Cache MISS] Calculating result for inputs {args}")
+        result = func(*args)
+        cache[args] = result
+        return result
+    return wrapper
+
+@memoize
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+print(factorial(5))
+print(factorial(6))
