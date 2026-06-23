@@ -237,3 +237,40 @@ coords = [[-1, 10], [2, 20], [0, 30], [4, 40]]
 
 flipped_cords = [(x,y) for x, y in coords if x > 0]
 print("flipped_cords", flipped_cords)
+
+
+
+
+
+
+
+
+#=========================Dictionary & Set Comprehensions===================
+cubes = {x: x**3 for x in range(1, 10)}
+print("cubes", cubes)
+
+
+original = {"admin": 101, "editor": 102, "guest": 103}
+inverted = {v: k for k, v in original.items()}
+print("original", original)
+print("inverted", inverted)
+
+
+filenames = ["data.csv", "LOG.txt", "script.py", "backup.CSV", "notes.TXT"]
+
+unique_ext = {flip.split(".")[1] for flip in filenames}
+print("unique_ext", unique_ext)
+
+#====Problem 1: The ID Filter (Dictionary Comprehension)=====
+
+employees = {"Alice": True, "Bob": False, "Charlie": True, "David": False}
+active_uppercase = {name: active for name, active in employees.items() if active == True}
+print("active_uppercase", active_uppercase)
+
+
+
+#+===Problem 2: The Character Unique Scanner (Set Comprehension)====
+words = "Supercalifragilisticexpialidocious"
+vowels = 'a', 'e', 'i', 'o', 'u'
+unique_vowels = {word for word in words if word in vowels}
+print("unique_vowels", unique_vowels)
