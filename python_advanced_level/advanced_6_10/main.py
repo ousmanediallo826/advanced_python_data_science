@@ -274,3 +274,84 @@ words = "Supercalifragilisticexpialidocious"
 vowels = 'a', 'e', 'i', 'o', 'u'
 unique_vowels = {word for word in words if word in vowels}
 print("unique_vowels", unique_vowels)
+
+
+
+#===================Context Managers======================
+file = open("data.csv", "w")
+try:
+    file.write("Processing sensitive data...")
+finally:
+    file.close()
+
+
+with open("text.txt", "w") as file:
+    file.write("Processing sensitive data...")
+
+
+class DataConnection:
+    def __init__(self, db_name):
+        self.db_name = db_name
+
+    def __enter__(self):
+        print(f"[ENTER] Connecting to database: {self.db_name}...")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print(f"[EXIT] Disconnecting from database: {self.db_name}...")
+
+        if exc_type:
+            print(f"-> A crash occurred: {exc_val}. Cleaning up connection safely.")
+        return True
+
+
+
+with DataConnection("production_db") as pd:
+    print("   Inside the with block: Fetching user metrics...")
+
+    raise RuntimeError("Lost network packet connection.")
+
+print("Program successfully continued running because __exit__ handled the error!")
+
+from contextlib import contextmanager
+
+@contextmanager
+def simple_file_manager(filename, mode):
+    print(f"Opening {filename}...")
+    file_obj = open(filename, mode)
+    try:
+        yield file_obj
+    finally:
+        print(f"Closing {filename}...")
+        file_obj.close()
+
+
+with simple_file_manager("test.txt", "w") as f:
+    f.write("Hello from contextlib!")
+
+
+class Transaction:
+
+    def __enter__(self):
+        print(f"[START] Beginning Database Transaction")
+        return self
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print(f"   Inside the with block: Fetching Transaction metrics...")
+
+        if exc_type:
+            print("[ROLLBACK] Undoing partial database writes!")
+
+        else:
+            print("[COMMIT] Saving changes permanently!")
+        return True
+
+
+with Transaction() as tx:
+    print("Writing user details...")
+
+print("-" * 20)
+with Transaction() as tx:
+    print("Writing item stock...")
+    raise ValueError("Invalid item count detected.")
+
+
