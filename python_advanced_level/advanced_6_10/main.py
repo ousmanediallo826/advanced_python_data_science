@@ -441,3 +441,37 @@ for match in re.finditer(pattern, log_data):
     error_code = match.group(2)
     print(f"Matched: '{full_match}' -> Level: {status_level}, Code: {error_code}")
 
+
+
+#===1. Non-Capturing Groups (?:...)===
+text = "Prices: video game video game video game ($60)"
+
+pattern = r"(?:video game )+(\(\$\d+\))"
+match = re.search(pattern, text)
+if match:
+    print("Full Match:", match.group(0))
+    print("Captured Group 1:", match.group(1))
+
+
+#===2. Named Capture Groups (?P<name>...)===
+log = "2026-06-25 ERROR: Database failure"
+
+pattern = r"(?P<date>\d{4}-\d{2}-\d{2}) (?P<level>\w+): (?P<msg>.*)"
+match = re.search(pattern, log)
+data_dict = match.groupdict()
+print(data_dict['level'])
+print(data_dict['msg'])
+
+
+#===3. Backreferences & Advanced re.sub===
+sentence = "The the programmer code code works perfectly."
+
+duplicate_pattern = r"\b(\w+)\s+\1\b"
+
+duplicate = re.findall(duplicate_pattern, sentence, flags=re.IGNORECASE)
+print(duplicate)
+
+
+password_rules = r"^(?=.*\d)(?=.*[A-Z])\w{8,}$"
+print(bool(re.match(password_rules, "mypassword123")))
+print(bool(re.match(password_rules, "SecurePassword2026")))
