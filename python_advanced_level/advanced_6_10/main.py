@@ -355,3 +355,89 @@ with Transaction() as tx:
     raise ValueError("Invalid item count detected.")
 
 
+
+#=========================11. Currying in Python==========================
+
+def standard_add(x,y, z):
+    return x + y + z
+
+def curried_add(x):
+    def next_y(y):
+        def next_z(z):
+            return x + y + z
+        return next_z
+    return next_y
+
+
+print(standard_add(1, 2, 3))
+print(curried_add(1)(2)(3))
+
+
+curried_multiply = lambda x: lambda y: x * y
+double = curried_multiply(2)
+triple = curried_multiply(3)
+print(triple(20))
+print(double(30))
+
+
+
+
+
+
+
+#=======================15. Regular Expressions======================
+import re
+
+text = "The agent code is secret 007 agent."
+
+pattern = r"\d\d\d"
+
+match = re.search(pattern, text)
+if match:
+    print(f"Found a match: {match.group()}")
+
+
+log_data = "Error on device ABC-9812 at terminal station."
+pattern = r"\w{3}-\d{4}"
+
+match = re.search(pattern, log_data)
+if match:
+    print(f"Found a match: {match.group()}")
+
+
+invoice = "The ledger includes laptop ($999), mouse ($25), and secondary monitor ($200)."
+
+pattern = r"\$\d+"
+match = re.findall(pattern, invoice)
+if match:
+    print(f"Found a match: {match}")
+
+
+contact_sheet = "Call office lines at 555-123-4567 or emergency dispatch at 800-555-9999 immediately."
+
+phone_pattern = r"\d{3}-\d{3}-\d{4}"
+
+numbers= re.findall(phone_pattern, contact_sheet)
+print(numbers)
+
+
+tweet = "Learning #python programming is amazing! #coding #regex_mastery2026"
+
+hashtag_pattern = r"#\w+"
+hashtags = re.findall(hashtag_pattern, tweet)
+print(hashtags)
+
+
+#======================16. Advanced Regular Expressions==========================
+
+import re
+
+log_data = "LOG_2026: [ERROR] Code:404 at runtime. [WARNING] Code:200 during boot."
+
+pattern = r"\[(\w+)\] Code:(\d+)"
+for match in re.finditer(pattern, log_data):
+    full_match = match.group(0)
+    status_level = match.group(1)
+    error_code = match.group(2)
+    print(f"Matched: '{full_match}' -> Level: {status_level}, Code: {error_code}")
+
