@@ -146,3 +146,100 @@ covert_usernames = list(map(
 print(covert_usernames)
 
 
+#==============Level 2 — Lambda syntax and limits============
+
+square = lambda x: x * x
+add    = lambda x, y: x + y
+greet = lambda name: f"Hello {name}"
+no_args = lambda: 42
+
+print(square(4))
+print(add(1, 2))
+print(greet("Ousmane"))
+
+
+
+#=================Level 3 — map(), filter(), reduce()============
+
+nums = [1, 2, 3, 4, 5]
+
+doubled = list(map(lambda x: x * 2, nums))
+print(doubled)
+
+def celsius_to_fahrenheit(temp):
+    return round((temp - 32) * 5 / 9 + 32)
+
+temps = list(map(celsius_to_fahrenheit, [32, 68, 98.6, 212]))
+print(temps)
+
+prices = [10, 20, 30]
+qtys   = [3, 1, 5]
+
+totals = list(map(lambda p, q: p * q, prices, qtys))
+print("total",totals)
+
+
+#=========Level 4 — Combining all three (pipelines)===========
+
+orders = [
+    {"product": "laptop",   "price": 999, "qty": 1, "active": True},
+    {"product": "mouse",    "price": 25,  "qty": 3, "active": True},
+    {"product": "monitor",  "price": 350, "qty": 2, "active": False},
+    {"product": "keyboard", "price": 80,  "qty": 2, "active": True},
+]
+
+active = filter(
+    lambda order: order["active"], orders
+)
+
+total = map(
+    lambda order: order["price"] * order["qty"], active
+)
+
+grand_total = reduce(
+    lambda acc, t: acc + t, total, 0
+)
+
+print(grand_total)
+
+
+
+#============Level 7 — Industry-ready: pipe(), performance, type hints==================
+
+def pipe(*functions):
+    """Apply functions left-to-right: pipe(f, g, h)(x) = h(g(f(x)))"""
+    return lambda x: reduce(lambda v,f: f(v), functions, x)
+
+normalize = lambda s: s.strip().lower()
+remove_punc = lambda s: "".join(c for c in s if c.isalnum() or c == " ")
+tokenize     = lambda s: s.split()
+
+clean_text = pipe(normalize, remove_punc, tokenize)
+
+text = "  Hello, World! This is Python.  "
+
+print(clean_text(text))
+
+texts  = ["  Hello! ", " World?? ", "Python 3. "]
+tokens = list(map(clean_text, texts))
+print(tokens)
+
+
+
+
+#=======Exercise 1 — Beginner: Given =====
+temps_f = [14, 32, 50, 77, 95, 23, -4]
+
+celsius = reduce(
+    lambda x, y: x + y,
+    filter(
+        lambda temp: temp > 0,
+        map(
+            lambda c: round((c -32) / (9/5) ), temps_f
+        )
+    )
+)
+
+print(celsius)
+
+
