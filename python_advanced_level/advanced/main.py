@@ -243,3 +243,32 @@ celsius = reduce(
 print(celsius)
 
 
+#===========================Topic 5 — zip()==========================
+names  = ["Alice", "Bob", "Carol"]
+scores = [92, 85, 78]
+
+paired = list(zip(names, scores))
+print(paired)
+
+
+
+from itertools import zip_longest
+
+a = [1, 2, 3, 4, 5]
+b = ["a", "b", "c"]
+
+print(list(zip_longest(a, b, fillvalue="N/A")))
+
+
+keys   = ["name", "age", "city"]
+values = ["Alice", 28, "New York"]
+
+person = dict(zip(keys, values))
+print(person)
+
+
+user_ids   = [101, 102, 103]
+user_names = ["Alice", "Bob", "Carol"]
+
+user_map = {uid: name for uid, name in zip(user_ids, user_names) }
+print(user_map)
